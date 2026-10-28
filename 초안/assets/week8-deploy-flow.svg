@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+  <title id="title">Week 8 deploy flow</title>
+  <desc id="desc">Sequence diagram showing GitHub Actions deploying frontend assets to S3 and CloudFront, then validating the production domain.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2f5bea"/>
+    </marker>
+    <style>
+      .bg { fill: #f7f8fc; }
+      .box { fill: #ffffff; stroke: #243b53; stroke-width: 1.5; rx: 8; ry: 8; }
+      .title { font: 700 24px Arial, sans-serif; fill: #102a43; }
+      .label { font: 600 16px Arial, sans-serif; fill: #102a43; }
+      .step { font: 14px Arial, sans-serif; fill: #102a43; }
+      .line { stroke: #9fb3c8; stroke-width: 2; stroke-dasharray: 8 6; }
+      .arrow { stroke: #2f5bea; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .note { font: 13px Arial, sans-serif; fill: #486581; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="540" />
+  <text class="title" x="40" y="42">Frontend deploy flow after week 8 cleanup</text>
+
+  <rect class="box" x="40" y="70" width="180" height="46" />
+  <rect class="box" x="280" y="70" width="180" height="46" />
+  <rect class="box" x="520" y="70" width="180" height="46" />
+  <rect class="box" x="760" y="70" width="180" height="46" />
+  <rect class="box" x="1000" y="70" width="160" height="46" />
+
+  <text class="label" x="90" y="99">GitHub Actions</text>
+  <text class="label" x="351" y="99">S3</text>
+  <text class="label" x="798" y="99">CloudFront</text>
+  <text class="label" x="1050" y="99">Prod Domain</text>
+  <text class="label" x="558" y="99">Build Output</text>
+
+  <line class="line" x1="130" y1="116" x2="130" y2="500" />
+  <line class="line" x1="370" y1="116" x2="370" y2="500" />
+  <line class="line" x1="610" y1="116" x2="610" y2="500" />
+  <line class="line" x1="850" y1="116" x2="850" y2="500" />
+  <line class="line" x1="1080" y1="116" x2="1080" y2="500" />
+
+  <line class="arrow" x1="130" y1="150" x2="610" y2="150" />
+  <text class="step" x="250" y="142">1. Build frontend assets</text>
+
+  <line class="arrow" x1="610" y1="210" x2="370" y2="210" />
+  <text class="step" x="410" y="202">2. Upload dist files to S3</text>
+
+  <line class="arrow" x1="130" y1="270" x2="850" y2="270" />
+  <text class="step" x="410" y="262">3. Create CloudFront invalidation</text>
+
+  <line class="arrow" x1="130" y1="330" x2="1080" y2="330" />
+  <text class="step" x="460" y="322">4. Poll prod domain for latest asset hash</text>
+
+  <line class="arrow" x1="1080" y1="390" x2="850" y2="390" />
+  <text class="step" x="885" y="382">5. Request latest static assets</text>
+
+  <line class="arrow" x1="850" y1="450" x2="370" y2="450" />
+  <text class="step" x="520" y="442">6. Fetch latest content from S3 cache origin</text>
+
+  <text class="note" x="40" y="520">Result: frontend is served through a single path, S3 plus CloudFront, and the production domain is verified after deploy.</text>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="780" viewBox="0 0 1320 780" role="img" aria-labelledby="title desc">
+  <title id="title">Week 8 presigned upload and download flow</title>
+  <desc id="desc">Sequence diagram showing client, backend, S3, and database interactions for presigned upload confirm flow and presigned download flow.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2f5bea"/>
+    </marker>
+    <style>
+      .bg { fill: #f7f8fc; }
+      .box { fill: #ffffff; stroke: #243b53; stroke-width: 1.5; rx: 8; ry: 8; }
+      .title { font: 700 24px Arial, sans-serif; fill: #102a43; }
+      .section { font: 700 18px Arial, sans-serif; fill: #102a43; }
+      .label { font: 600 16px Arial, sans-serif; fill: #102a43; }
+      .step { font: 14px Arial, sans-serif; fill: #102a43; }
+      .line { stroke: #9fb3c8; stroke-width: 2; stroke-dasharray: 8 6; }
+      .arrow { stroke: #2f5bea; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .divider { stroke: #7b8794; stroke-width: 2; stroke-dasharray: 10 8; }
+      .note { font: 13px Arial, sans-serif; fill: #486581; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1320" height="780" />
+  <text class="title" x="40" y="42">Presigned file flow introduced in week 8</text>
+
+  <rect class="box" x="60" y="70" width="180" height="46" />
+  <rect class="box" x="340" y="70" width="220" height="46" />
+  <rect class="box" x="680" y="70" width="180" height="46" />
+  <rect class="box" x="980" y="70" width="180" height="46" />
+
+  <text class="label" x="130" y="99">Client UI</text>
+  <text class="label" x="410" y="99">Backend API</text>
+  <text class="label" x="748" y="99">S3</text>
+  <text class="label" x="1058" y="99">Database</text>
+
+  <line class="line" x1="150" y1="116" x2="150" y2="720" />
+  <line class="line" x1="450" y1="116" x2="450" y2="720" />
+  <line class="line" x1="770" y1="116" x2="770" y2="720" />
+  <line class="line" x1="1070" y1="116" x2="1070" y2="720" />
+
+  <text class="section" x="40" y="155">Upload flow</text>
+
+  <line class="arrow" x1="150" y1="190" x2="450" y2="190" />
+  <text class="step" x="184" y="182">1. Request presigned upload URL</text>
+
+  <line class="arrow" x1="450" y1="245" x2="770" y2="245" />
+  <text class="step" x="505" y="237">2. Create presigned PUT URL</text>
+
+  <line class="arrow" x1="770" y1="300" x2="150" y2="300" />
+  <text class="step" x="340" y="292">3. Return upload URL and objectKey</text>
+
+  <line class="arrow" x1="150" y1="355" x2="770" y2="355" />
+  <text class="step" x="360" y="347">4. Upload file bytes directly to S3</text>
+
+  <line class="arrow" x1="150" y1="410" x2="450" y2="410" />
+  <text class="step" x="214" y="402">5. Call confirm-upload</text>
+
+  <line class="arrow" x1="450" y1="465" x2="770" y2="465" />
+  <text class="step" x="475" y="457">6. HeadObject metadata check</text>
+
+  <line class="arrow" x1="450" y1="520" x2="1070" y2="520" />
+  <text class="step" x="655" y="512">7. Save booking_file metadata</text>
+
+  <line class="arrow" x1="1070" y1="575" x2="150" y2="575" />
+  <text class="step" x="470" y="567">8. Confirm success response</text>
+
+  <line class="divider" x1="40" y1="615" x2="1280" y2="615" />
+  <text class="section" x="40" y="650">Download flow</text>
+
+  <line class="arrow" x1="150" y1="685" x2="450" y2="685" />
+  <text class="step" x="184" y="677">1. Request presigned download URL</text>
+
+  <line class="arrow" x1="450" y1="685" x2="1070" y2="685" />
+  <text class="step" x="650" y="677">2. Verify permission and file metadata</text>
+
+  <line class="arrow" x1="450" y1="725" x2="770" y2="725" />
+  <text class="step" x="505" y="717">3. Create presigned GET URL</text>
+
+  <text class="note" x="885" y="709">4. Client downloads directly from S3 with the returned URL</text>
+</svg>
